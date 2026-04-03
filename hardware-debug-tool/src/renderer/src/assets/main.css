@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('./fonts/JetBrainsMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('./fonts/JetBrainsMono-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -24,51 +40,54 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Serial Monitor specific colors */
+  --color-terminal-bg: var(--terminal-bg);
+  --color-terminal-rx: var(--terminal-rx);
+  --color-terminal-tx: var(--terminal-tx);
+  --color-terminal-timestamp: var(--terminal-timestamp);
+  --color-terminal-text: var(--terminal-text);
+  --color-terminal-border: var(--terminal-border);
+  --color-terminal-highlight: var(--terminal-highlight);
+  --color-terminal-success: var(--terminal-success);
+  --color-terminal-danger: var(--terminal-danger);
+
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 }
 
+/* Force dark theme */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --radius: 0.625rem;
-}
+  --background: #0d1117;
+  --foreground: #e6edf3;
+  --card: #161b22;
+  --card-foreground: #e6edf3;
+  --popover: #1c2128;
+  --popover-foreground: #e6edf3;
+  --primary: #58a6ff;
+  --primary-foreground: #0d1117;
+  --secondary: #21262d;
+  --secondary-foreground: #c9d1d9;
+  --muted: #21262d;
+  --muted-foreground: #8b949e;
+  --accent: #1f6feb;
+  --accent-foreground: #e6edf3;
+  --destructive: #f85149;
+  --destructive-foreground: #f85149;
+  --border: #30363d;
+  --input: #21262d;
+  --ring: #58a6ff;
+  --radius: 0.5rem;
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
+  /* Terminal colors */
+  --terminal-bg: #010409;
+  --terminal-rx: #3fb950;
+  --terminal-tx: #d29922;
+  --terminal-timestamp: #39d2f5;
+  --terminal-text: #c9d1d9;
+  --terminal-border: #21262d;
+  --terminal-highlight: rgba(210, 153, 34, 0.15);
+  --terminal-success: #3fb950;
+  --terminal-danger: #f85149;
 }
 
 @layer base {
@@ -78,8 +97,67 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: system-ui, -apple-system, Arial, Helvetica, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
     margin: 0;
-    overflow: auto;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom scrollbar for the terminal */
+  .terminal-scroll::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .terminal-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .terminal-scroll::-webkit-scrollbar-thumb {
+    background: #30363d;
+    border-radius: 4px;
+  }
+
+  .terminal-scroll::-webkit-scrollbar-thumb:hover {
+    background: #484f58;
+  }
+
+  /* Search highlight */
+  .search-highlight {
+    background-color: rgba(210, 153, 34, 0.3);
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
+  .search-highlight-active {
+    background-color: rgba(210, 153, 34, 0.6);
+    outline: 1px solid #d29922;
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
+  /* Select dropdown styling */
+  .serial-select {
+    @apply bg-secondary text-secondary-foreground;
+    border: 1px solid var(--border);
+  }
+
+  /* Pulse animation for connected status */
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .status-dot-connected {
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  /* Glow effect on connect button */
+  .connect-glow {
+    box-shadow: 0 0 12px rgba(63, 185, 80, 0.3);
+  }
+
+  .disconnect-glow {
+    box-shadow: 0 0 12px rgba(248, 81, 73, 0.3);
   }
 }

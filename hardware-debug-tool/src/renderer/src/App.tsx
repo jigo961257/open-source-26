@@ -1,10 +1,7 @@
+import { SerialMonitor } from './components/serial-monitor/SerialMonitor'
 
 function App(): React.JSX.Element {
-  return (
-    <div>
-      <h1>Hardware Debug Tool</h1>
-    </div>
-  )
+  return <SerialMonitor />
 }
 
 export default App
