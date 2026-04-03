@@ -1,0 +1,54 @@
+{
+  "name": "hardware-debug-tool",
+  "version": "1.0.0",
+  "description": "A modern Electron desktop application template with React, TypeScript, TailwindCSS v4, and Vite",
+  "main": "dist/main/index.js",
+  "author": {
+    "name": "Jeegar Goyani",
+    "url": "https://github.com/jigo961257",
+    "email": "jigobot1257@gmail.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/jigo961257/hardware-debug-tool",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jigo961257/hardware-debug-tool.git"
+  },
+  "scripts": {
+    "dev": "npx tsx scripts/dev.ts",
+    "build": "npm run build:main && npm run build:preload && npm run build:renderer",
+    "build:main": "vite build --config vite.main.config.ts",
+    "build:preload": "vite build --config vite.preload.config.ts",
+    "build:renderer": "vite build --config vite.renderer.config.ts",
+    "start": "electron .",
+    "preview": "npm run build && electron .",
+    "package": "npm run build && electron-builder --config electron-builder.yml",
+    "package:mac": "npm run build && electron-builder --mac --config electron-builder.yml",
+    "package:win": "npm run build && electron-builder --win --config electron-builder.yml",
+    "package:linux": "npm run build && electron-builder --linux --config electron-builder.yml",
+    "clean": "rimraf dist dist-electron",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx"
+  },
+  "dependencies": {
+    "electron-updater": "^6.3.9"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^33.3.1",
+    "electron-builder": "^25.1.8",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rimraf": "^6.0.1",
+    "tailwindcss": "^4.0.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.11"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

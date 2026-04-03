@@ -1,0 +1,78 @@
+appId: com.jigo.hardware-debug-tool
+productName: Hardware Debug Tool
+copyright: Copyright © 2025 Jeegar Goyani
+
+directories:
+  output: dist-electron
+  buildResources: resources
+
+files:
+  - dist/**/*
+  - package.json
+
+extraMetadata:
+  main: dist/main/index.js
+
+# macOS configuration
+mac:
+  category: public.app-category.developer-tools
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+  icon: resources/icon.icns
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  # Uncomment and configure for code signing
+  # identity: "Developer ID Application: Your Name (TEAM_ID)"
+  # notarize:
+  #   teamId: TEAM_ID
+
+dmg:
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
+
+# Windows configuration
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: resources/icon.ico
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  deleteAppDataOnUninstall: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+
+# Linux configuration
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+    - target: deb
+      arch:
+        - x64
+  category: Development
+  icon: resources/icons
+
+# Auto-updater configuration
+publish:
+  provider: github
+  owner: yourusername
+  repo: electron-template-by-jigo
+  releaseType: release
+
+# Build hooks
+beforeBuild: null
+afterSign: null
+afterPack: null
