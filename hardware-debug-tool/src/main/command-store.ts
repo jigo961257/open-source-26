@@ -10,9 +10,6 @@ export interface SavedCommandData {
   repeatInterval: number | null
 }
 
-interface StoreSchema {
-  savedCommands: SavedCommandData[]
-}
 
 export class CommandStore {
   private store: typeof Store
